@@ -22,8 +22,8 @@ class OperacoesBasicas:
  
 #Entrada de dados
 try:
-    a = int(input("Escolha um número de ponto flutuante: "))
-    b = int(input("Escolha outro número de ponto flutuante: "))
+    a = float(input("Escolha um número de ponto flutuante: "))
+    b = float(input("Escolha outro número de ponto flutuante: "))
 except ValueError:
     print("Por favor, digite números válidos!")
     exit()
@@ -35,7 +35,7 @@ print("1 - Adição")
 print("2 - Subtração")
 print("3 - Divisão")
 
-op = input("Qual será a operação a ser realizada de 0-3? ").strip()
+op = int(input("Qual será a operação a ser realizada de 0-3? ").strip())
 
 try:
     if op == 0: 
