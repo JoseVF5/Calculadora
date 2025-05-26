@@ -1,24 +1,16 @@
-import tkinter as tk
+from tkinter import *
+from tkinter import ttk
 
-class App(tk.Frame):
-    def __init__(self, master=None):
-        super().__init__(master)
-        self.pack()
+#Criação da janela
+janela = Tk()
+janela.title("Calculadora em Python")
+janela.geometry("318x490")
+janela.config(bg="darkolivegreen1", bd=400)
+janela.iconbitmap("imagens/Tittle Icon/Python.ico")
 
-# Cria a aplicação
-myapp = App()
+#definindo tamanho máximo e mínimo da janela 
+janela.resizable(False, False)
 
-#
-# aqui estão as chamadas de método para a classe do gerenciador de janelas
-#
-myapp.master.title("Meu Aplicativo Que Faz Nada")
-myapp.master.maxsize(1000, 400)
+#Criação do widgets e conteiners 
 
-# inicia o programa
-myapp.mainloop()
-
-
-
-
-
-
+janela.mainloop()
