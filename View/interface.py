@@ -1,4 +1,5 @@
 import tkinter as tk
+from Model.Funcoes import Operaçoes
 from tkinter import *
 
 
@@ -10,6 +11,7 @@ class Tela_principal():
         self.janela = tk.Tk()
 
         # Execução dos metódos
+        self.Operaçoes = Operaçoes()
         self.config_tela()
         self.conteiner_display_e_tela()
         self.centralizar_app()
