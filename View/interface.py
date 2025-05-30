@@ -1,21 +1,21 @@
 import tkinter as tk
-from Model.Funcoes import Operaçoes
 from tkinter import *
 
 
 # Criação da janela 
-class Tela_principal():
-    
+class Tela_principal:
+
     # Criação da janela principal e chamado as operações
     def __init__(self): 
         self.janela = tk.Tk()
-
+        self.valor_atual = ""
         # Execução dos metódos
-        self.Operaçoes = Operaçoes()
+        
         self.config_tela()
+        #self.atualizar_display()
         self.conteiner_display_e_tela()
         self.centralizar_app()
-        self.enquadramento()
+        self.enquadramento()     
         self.janela.mainloop()
         
     def config_tela(self):
@@ -52,9 +52,9 @@ class Tela_principal():
         
         # Criando o label do display 
         #(label é um widget usado para implementar caixas de exibição onde você pode inserir texto ou imagens)
-        
-        self.label_display = Label(self.frame_display, 
-                                   text="123456",
+
+        self.label_display = Label(self.frame_display,
+                                   text=self.valor_atual, 
                                    font="Arial 28", 
                                    width=14,  
                                    height=2 , 
@@ -66,8 +66,44 @@ class Tela_principal():
                                    bg="green",
                                    fg="white")
         self.label_display.place(x=0, y=0)
+    
+    # Criando a função para atualizar o Display
+    #def atualizar_display(self):
+        #self.label_display.config(text=self.valor_atual)
+     
+    # Função para inserir valores e operadores       
+    def inserir_valor(self, valor):
+        self.valor_atual += str(valor)
+        self.atualizar_display()
+    
+    def Calcular_o_resultado(self):
+        try:
+            resultado = str(eval(self.valor_atual.replace('x', '*').replace('÷', '/')))
+            self.valor_atual = resultado
+        except:
+            self.valor_atual = "Erro"
+            self.atualizar_display()   
         
-        
+    # Criando as funções para apagar e limpar
+    def limpar(self):  
+        self.valor_atual = ""
+        self.atualizar_display()
+
+    def apagar(self):
+        self.valor_atual = self.valor_atual[:-1]
+        self.atualizar_display()    
+    
+    # Criando a função porcentagem
+    def porcentagem(self):
+        try:
+            resultado = eval(self.valor_display) / 100
+            self.valor_display = str(resultado)
+            self.label_display.config(text=self.valor_display)
+        except:
+            self.label_display.config(text="Erro")
+            self.valor_display = ""    
+            
+                           
         # Criação do container do corpo
         self.frame_tela = Frame(self.janela, 
                                 width=318, 
@@ -235,11 +271,12 @@ class Tela_principal():
                                      font="Arial 9",
                                      relief=RAISED,
                                      overrelief="ridge",
-                                     bg="antiquewhite2")
+                                     bg="antiquewhite2",
+                                     command = self.limpar)
         self.botão_clear.pack(fill="both", 
                               expand=True) # Garante que o botão preencha o Frame
         self.botão_clear.pack(pady=0) # Adiciona espaço vertical ao Frame
-        
+
         self.botão_porcentagem = tk.Button(self.frame_porcentagem,
                                      text="%", 
                                      width=8, 
@@ -247,7 +284,8 @@ class Tela_principal():
                                      font="Arial 13",
                                      relief=RAISED,
                                      overrelief="ridge",
-                                     bg="antiquewhite2")
+                                     bg="antiquewhite2",
+                                     command = self.porcentagem)
         self.botão_porcentagem.pack(fill="both", 
                               expand=True) # Garante que o botão preencha o Frame
         self.botão_porcentagem.pack(pady=0) # Adiciona espaço vertical ao Frame
@@ -259,7 +297,8 @@ class Tela_principal():
                                      font="Arial 10",
                                      relief=RAISED,
                                      overrelief="ridge",
-                                     bg="antiquewhite2")
+                                     bg="antiquewhite2", 
+                                     command = self.apagar)
         self.botão_apaga.pack(fill="both", 
                               expand=True) # Garante que o botão preencha o Frame
         self.botão_apaga.pack(pady=0) # Adiciona espaço vertical ao Frame
@@ -271,7 +310,8 @@ class Tela_principal():
                                      font="Arial 12 bold",
                                      relief=RAISED,
                                      overrelief="ridge",
-                                     bg="orange")
+                                     bg="orange",
+                                     command=lambda: self.inserir_valor("÷"))
         self.botão_divisão.pack(fill="both", 
                               expand=True) # Garante que o botão preencha o Frame
         self.botão_divisão.pack(pady=0) # Adiciona espaço vertical ao Frame 
@@ -283,7 +323,8 @@ class Tela_principal():
                                      font="Arial 12",
                                      relief=RAISED,
                                      overrelief="ridge",
-                                     bg="antiquewhite2")
+                                     bg="antiquewhite2",
+                                     command = lambda: self.inserir_valor(9))
         self.botão_num9.pack(fill="both", 
                               expand=True) # Garante que o botão preencha o Frame
         self.botão_num9.pack(pady=0) # Adiciona espaço vertical ao Frame
@@ -295,7 +336,8 @@ class Tela_principal():
                                      font="Arial 12",
                                      relief=RAISED,
                                      overrelief="ridge",
-                                     bg="antiquewhite2")
+                                     bg="antiquewhite2",
+                                     command = lambda: self.inserir_valor(8))
         self.botão_num8.pack(fill="both", 
                               expand=True) # Garante que o botão preencha o Frame
         self.botão_num8.pack(pady=0) # Adiciona espaço vertical ao Frame
@@ -307,7 +349,8 @@ class Tela_principal():
                                      font="Arial 12",
                                      relief=RAISED,
                                      overrelief="ridge",
-                                     bg="antiquewhite2")
+                                     bg="antiquewhite2",
+                                     command = lambda: self.inserir_valor(7))
         self.botão_num7.pack(fill="both", 
                               expand=True) # Garante que o botão preencha o Frame
         self.botão_num7.pack(pady=0) # Adiciona espaço vertical ao Frame
@@ -319,7 +362,8 @@ class Tela_principal():
                                      font="Arial 13",
                                      relief=RAISED,
                                      overrelief="ridge",
-                                     bg="orange")
+                                     bg="orange",
+                                     command=lambda: self.inserir_valor("x"))
         self.botão_multiplicação.pack(fill="both", 
                               expand=True) # Garante que o botão preencha o Frame
         self.botão_multiplicação.pack(pady=0) # Adiciona espaço vertical ao Frame
@@ -331,7 +375,8 @@ class Tela_principal():
                                      font="Arial 12",
                                      relief=RAISED,
                                      overrelief="ridge",
-                                     bg="antiquewhite2")
+                                     bg="antiquewhite2",
+                                     command = lambda: self.inserir_valor(6))
         self.botão_num6.pack(fill="both", 
                               expand=True) # Garante que o botão preencha o Frame
         self.botão_num6.pack(pady=0) # Adiciona espaço vertical ao Frame
@@ -343,7 +388,8 @@ class Tela_principal():
                                      font="Arial 12",
                                      relief=RAISED,
                                      overrelief="ridge",
-                                     bg="antiquewhite2")
+                                     bg="antiquewhite2",
+                                     command = lambda: self.inserir_valor(5))
         self.botão_num5.pack(fill="both", 
                               expand=True) # Garante que o botão preencha o Frame
         self.botão_num5.pack(pady=0) # Adiciona espaço vertical ao Frame
@@ -355,7 +401,8 @@ class Tela_principal():
                                      font="Arial 12",
                                      relief=RAISED,
                                      overrelief="ridge",
-                                     bg="antiquewhite2")
+                                     bg="antiquewhite2", 
+                                     command = lambda: self.inserir_valor(4))
         self.botão_num4.pack(fill="both", 
                               expand=True) # Garante que o botão preencha o Frame
         self.botão_num4.pack(pady=0) # Adiciona espaço vertical ao Frame
@@ -367,7 +414,8 @@ class Tela_principal():
                                      font="Arial 13 bold",
                                      relief=RAISED,
                                      overrelief="ridge",
-                                     bg="orange")
+                                     bg="orange",
+                                     command=lambda: self.inserir_valor("-"))
         self.botão_subtração.pack(fill="both", 
                               expand=True) # Garante que o botão preencha o Frame
         self.botão_subtração.pack(pady=0) # Adiciona espaço vertical ao Frame
@@ -379,7 +427,8 @@ class Tela_principal():
                                      font="Arial 12",
                                      relief=RAISED,
                                      overrelief="ridge",
-                                     bg="antiquewhite2")
+                                     bg="antiquewhite2",
+                                     command = lambda: self.inserir_valor(3))
         self.botão_num3.pack(fill="both", 
                               expand=True) # Garante que o botão preencha o Frame
         self.botão_num3.pack(pady=0) # Adiciona espaço vertical ao Frame
@@ -391,7 +440,8 @@ class Tela_principal():
                                      font="Arial 12",
                                      relief=RAISED,
                                      overrelief="ridge",
-                                     bg="antiquewhite2")
+                                     bg="antiquewhite2",
+                                     command = lambda: self.inserir_valor(2))
         self.botão_num2.pack(fill="both", 
                               expand=True) # Garante que o botão preencha o Frame
         self.botão_num2.pack(pady=0) # Adiciona espaço vertical ao Frame
@@ -403,7 +453,8 @@ class Tela_principal():
                                      font="Arial 12",
                                      relief=RAISED,
                                      overrelief="ridge",
-                                     bg="antiquewhite2")
+                                     bg="antiquewhite2",
+                                     command = lambda: self.inserir_valor(1))
         self.botão_num1.pack(fill="both", 
                               expand=True) # Garante que o botão preencha o Frame
         self.botão_num1.pack(pady=0) # Adiciona espaço vertical ao Frame
@@ -415,7 +466,8 @@ class Tela_principal():
                                      font="Arial 13 bold",
                                      relief=RAISED,
                                      overrelief="ridge",
-                                     bg="orange")
+                                     bg="orange",
+                                     command = lambda: self.inserir_valor("+"))
         self.botão_soma.pack(fill="both", 
                               expand=True) # Garante que o botão preencha o Frame
         self.botão_soma.pack(pady=0) # Adiciona espaço vertical ao Frame
@@ -427,19 +479,21 @@ class Tela_principal():
                                      font="Arial 12",
                                      relief=RAISED,
                                      overrelief="ridge",
-                                     bg="antiquewhite2")
+                                     bg="antiquewhite2",
+                                     command = lambda: self.inserir_valor(0))
         self.botão_num0.pack(fill="both", 
                               expand=True) # Garante que o botão preencha o Frame
         self.botão_num0.pack(pady=0) # Adiciona espaço vertical ao Frame
         
-        self.botão_virgula = tk.Button(self.frame_virgula,
-                                     text=",", 
+        self.botão_virgula = tk.Button(self.frame_virgula, # Vou utilizar ponto no lugar da vírgula, já que é o separador decimal em python
+                                     text=".", 
                                      width=7, 
                                      height=3, 
                                      font="Arial 13 bold",
                                      relief=RAISED,
                                      overrelief="ridge",
-                                     bg="antiquewhite2")
+                                     bg="antiquewhite2", 
+                                     command = lambda: self.inserir_valor("."))
         self.botão_virgula.pack(fill="both", 
                               expand=True) # Garante que o botão preencha o Frame
         self.botão_virgula.pack(pady=0) # Adiciona espaço vertical ao Frame
