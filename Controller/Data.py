@@ -1,10 +1,11 @@
 from Model.Funcoes import Operaçoes 
+from View.Interface import Tela_principal
 
-class CalucaldorApp:
+class CalucaldoraApp:
     
-    def __init__(self, View):
+    def __init__(self, view):
        self.operaçoes = Operaçoes()
-       self.View = View() # recebe a view para poder interagir
+       self.View = Tela_principal() # recebe a view para poder interagir
        
     def calcular(self):
         try:
@@ -14,9 +15,9 @@ class CalucaldorApp:
 
             resultado = self.operaçoes.calcular(num1, num2, operador)
 
-            self.view.exibir_resultado(resultado)
+            self.View.exibir_resultado(resultado)
 
         except ValueError as e:
-            self.view.exibir_erro(str(e))
+            self.View.exibir_erro(str(e))
         except Exception as e:
-            self.view.exibir_erro(f"Erro inesperado: {e}")
+            self.View.exibir_erro(f"Erro inesperado: {e}")
