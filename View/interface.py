@@ -1,12 +1,11 @@
 import tkinter as tk
 from tkinter import *
 
-
 # Criação da janela 
 class Tela_principal:
 
     # Criação da janela principal e chamado as operações
-    def __init__(self, controller): 
+    def __init__(self, controller=None): 
         self.controller = controller
         self.janela = tk.Tk()
         self.valor_atual = ""
@@ -16,9 +15,6 @@ class Tela_principal:
         self.conteiner_display_e_tela()
         self.centralizar_app()  
         self.atualizar_display(self.valor_atual)
-        self.frames_botoes()
-        self.criar_botoes()
-        self.janela.mainloop()
         
     def config_tela(self):
         self.janela.title("Calculadora em Python")
@@ -253,7 +249,7 @@ class Tela_principal:
                                      relief=RAISED,
                                      overrelief="ridge",
                                      bg="antiquewhite2",  
-                                     command = lambda:self.controller.controller.porcentagem)
+                                     command = lambda:self.controller.porcentagem)
         self.botao_porcentagem.pack(fill="both", expand=True, pady=0)
           
         self.botao_apaga = Button(self.frame_apaga,
@@ -275,7 +271,7 @@ class Tela_principal:
                                      relief=RAISED,
                                      overrelief="ridge",
                                      bg="antiquewhite2",  
-                                     command = lambda:self.inserir_valor("÷"))
+                                     command = lambda:self.controller.inserir_valor("÷"))
         self.botao_divisão.pack(fill="both", expand=True, pady=0)
    
         self.botao_num9 = Button(self.frame_num9,
@@ -286,7 +282,7 @@ class Tela_principal:
                                      relief=RAISED,
                                      overrelief="ridge",
                                      bg="antiquewhite2",  
-                                     command = lambda:self.inserir_valor("9"))
+                                     command = lambda:self.controller.inserir_valor("9"))
         self.botao_num9.pack(fill="both", expand=True, pady=0)
         
         self.botao_num8 = Button(self.frame_num8,
@@ -297,7 +293,7 @@ class Tela_principal:
                                      relief=RAISED,
                                      overrelief="ridge",
                                      bg="antiquewhite2",  
-                                     command = lambda:self.inserir_valor("8"))
+                                     command = lambda:self.controller.inserir_valor("8"))
         self.botao_num8.pack(fill="both", expand=True, pady=0)
         
         self.botao_num7= Button(self.frame_num7,
@@ -308,7 +304,7 @@ class Tela_principal:
                                      relief=RAISED,
                                      overrelief="ridge",
                                      bg="antiquewhite2",  
-                                     command = lambda:self.inserir_valor("7"))
+                                     command = lambda:self.controller.inserir_valor("7"))
         self.botao_num7.pack(fill="both", expand=True, pady=0)
         
         self.botao_multiplicação = Button(self.frame_multiplicação,
@@ -319,7 +315,7 @@ class Tela_principal:
                                      relief=RAISED,
                                      overrelief="ridge",
                                      bg="antiquewhite2",  
-                                     command = lambda:self.inserir_valor("x"))
+                                     command = lambda:self.controller.inserir_valor("x"))
         self.botao_multiplicação.pack(fill="both", expand=True, pady=0)
         
         self.botao_num6 = Button(self.frame_num6,
@@ -330,7 +326,7 @@ class Tela_principal:
                                      relief=RAISED,
                                      overrelief="ridge",
                                      bg="antiquewhite2",  
-                                     command = lambda:self.inserir_valor("6"))
+                                     command = lambda:self.controller.inserir_valor("6"))
         self.botao_num6.pack(fill="both", expand=True, pady=0)
         
         self.botao_num5 = Button(self.frame_num5,
@@ -341,7 +337,7 @@ class Tela_principal:
                                      relief=RAISED,
                                      overrelief="ridge",
                                      bg="antiquewhite2",  
-                                     command = lambda:self.inserir_valor("5"))
+                                     command = lambda:self.controller.inserir_valor("5"))
         self.botao_num5.pack(fill="both", expand=True, pady=0)
         
         self.botao_num4 = Button(self.frame_num4,
@@ -352,7 +348,7 @@ class Tela_principal:
                                      relief=RAISED,
                                      overrelief="ridge",
                                      bg="antiquewhite2",  
-                                     command = lambda:self.inserir_valor("4"))
+                                     command = lambda:self.controller.inserir_valor("4"))
         self.botao_num4.pack(fill="both", expand=True, pady=0)
         
         self.botao_subtração = Button(self.frame_subtração,
@@ -363,7 +359,7 @@ class Tela_principal:
                                      relief=RAISED,
                                      overrelief="ridge",
                                      bg="antiquewhite2",  
-                                     command = lambda:self.inserir_valor("-"))
+                                     command = lambda:self.controller.inserir_valor("-"))
         self.botao_subtração.pack(fill="both", expand=True, pady=0)
         
         self.botao_num3 = Button(self.frame_num3,
@@ -374,7 +370,7 @@ class Tela_principal:
                                      relief=RAISED,
                                      overrelief="ridge",
                                      bg="antiquewhite2",  
-                                     command = lambda:self.inserir_valor("3"))
+                                     command = lambda:self.controller.inserir_valor("3"))
         self.botao_num3.pack(fill="both", expand=True, pady=0)
         
         self.botao_num2 = Button(self.frame_num2,
@@ -385,7 +381,7 @@ class Tela_principal:
                                      relief=RAISED,
                                      overrelief="ridge",
                                      bg="antiquewhite2",  
-                                     command = lambda:self.inserir_valor("2"))
+                                     command = lambda:self.controller.inserir_valor("2"))
         self.botao_num2.pack(fill="both", expand=True, pady=0)
         
         self.botao_num1 = Button(self.frame_num1,
@@ -396,7 +392,7 @@ class Tela_principal:
                                      relief=RAISED,
                                      overrelief="ridge",
                                      bg="antiquewhite2",  
-                                     command = lambda:self.inserir_valor("1"))
+                                     command = lambda:self.controller.inserir_valor("1"))
         self.botao_num1.pack(fill="both", expand=True, pady=0)
         
         self.botao_soma = Button(self.frame_soma,
@@ -407,7 +403,7 @@ class Tela_principal:
                                      relief=RAISED,
                                      overrelief="ridge",
                                      bg="antiquewhite2",  
-                                     command = lambda:self.inserir_valor("+"))
+                                     command = lambda:self.controller.inserir_valor("+"))
         self.botao_soma.pack(fill="both", expand=True, pady=0)
               
         self.botao_num0 = Button(self.frame_num0,
@@ -418,7 +414,7 @@ class Tela_principal:
                                      relief=RAISED,
                                      overrelief="ridge",
                                      bg="antiquewhite2",  
-                                     command = lambda:self.inserir_valor("0"))
+                                     command = lambda:self.controller.inserir_valor("0"))
         self.botao_num0.pack(fill="both", expand=True, pady=0)
         
         self.botao_virgula = Button(self.frame_virgula,
@@ -429,7 +425,7 @@ class Tela_principal:
                                      relief=RAISED,
                                      overrelief="ridge",
                                      bg="antiquewhite2",  
-                                     command = lambda:self.inserir_valor("."))
+                                     command = lambda:self.controller.inserir_valor("."))
         self.botao_virgula.pack(fill="both", expand=True, pady=0)
         
         self.botao_resultado = Button(self.frame_resultado,
@@ -442,7 +438,3 @@ class Tela_principal:
                                      bg="antiquewhite2",
                                      command = self.controller.calcular_o_resultado)
         self.botao_resultado.pack(fill="both", expand=True, pady=0)
-
-if __name__ == "__main__":
-    #Mantem a janela aberta
-    Tela_principal()

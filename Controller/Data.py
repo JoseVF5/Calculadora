@@ -31,15 +31,22 @@ class CalucaldoraApp:
          self.View.atualizar_display(self.valor_atual)
         except:
           self.valor_atual = "Erro"
-          self.View.atualizar_display()  # <- tem que atualizar após calcular  
+          self.View.atualizar_display(self.valor_atual)  # <- tem que atualizar após calcular  
         
     # Criando as funções para apagar e limpar
     def limpar(self):  
         self.valor_atual = ""
-        self.View.atualizar_display()
+        self.View.atualizar_display(self.valor_atual)
 
     def apagar(self):
         self.valor_atual = self.valor_atual[:-1]
-        self.View.atualizar_display()    
+        self.View.atualizar_display(self.valor_atual)    
     
-  
+    def porcentagem(self):
+        try:
+            expressao = self.valor_atual.replace('x', '*').replace('÷', '/')
+            resultado = eval(expressao) / 100
+            self.valor_atual = str(resultado)
+        except:
+            self.valor_atual = "Erro"
+            self.atualizar_display()
