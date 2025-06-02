@@ -14,6 +14,7 @@ class Tela_principal:
         self.config_tela()
         self.conteiner_display_e_tela()
         self.centralizar_app()  
+        self.atualizar_display()
         self.frames_botoes()
         self.criar_botoes()
         self.janela.mainloop()
@@ -65,6 +66,12 @@ class Tela_principal:
                                    bg="green",
                                    fg="white")
         self.label_display.place(x=0, y=0)
+        
+         # Criação do container do corpo
+        self.frame_tela = Frame(self.janela, 
+                                width=318, 
+                                height=410)
+        self.frame_tela.place(x=0, y=90)
     
     # Criando a função para atualizar o Display
     def atualizar_display(self):
@@ -77,11 +84,12 @@ class Tela_principal:
     
     def Calcular_o_resultado(self):
         try:
-            resultado = str(eval(self.valor_atual.replace('x', '*').replace('÷', '/')))
-            self.valor_atual = resultado
+         valor_atual = ""
+         resultado = str(eval(self.valor_atual.replace('x', '*').replace('÷', '/')))
+         self.valor_atual.set(resultado)
         except:
-            self.valor_atual = "Erro"
-            self.atualizar_display()   
+          self.valor_atual = "Erro"
+          self.atualizar_display()  # <- tem que atualizar após calcular  
         
     # Criando as funções para apagar e limpar
     def limpar(self):  
@@ -95,18 +103,13 @@ class Tela_principal:
     # Criando a função porcentagem
     def porcentagem(self):
         try:
-            resultado = eval(self.valor_atual) / 100
+            expressao = self.valor_atual.replace('x', '*').replace('÷', '/')
+            resultado = eval(expressao) / 100
             self.valor_atual = str(resultado)
         except:
             self.valor_atual = "Erro"
-            self.atualizar_display()   
-                                  
-        # Criação do container do corpo
-        self.frame_tela = Frame(self.janela, 
-                                width=318, 
-                                height=410)
-        self.frame_tela.place(x=0, y=90)
-
+            self.atualizar_display()
+  
         # Criação dos containers dos botões
     def frames_botoes(self):  
         self.frame_botão_clear = Frame(self.janela,
@@ -127,16 +130,17 @@ class Tela_principal:
         self.frame_porcentagem.place(x=78, y=90)
   
         self.frame_apaga = Frame(self.janela, 
-                                       relief="groove", 
-                                       width=90, 
-                                       height=70,
-                                       borderwidth=0.6,
-                                       bg="cornsilk1")
+                                    relief="groove", 
+                                    width=90, 
+                                    height=70,
+                                    borderwidth=0.6,
+                                    bg="cornsilk1")
         self.frame_apaga.place(x=160, y=90)
         
         self.frame_divisão = Frame(self.janela,
                                     relief="groove", 
-                                    width=90, height=70, 
+                                    width=90, 
+                                    height=70, 
                                     borderwidth=0.6, 
                                     bg="cornsilk1")
         self.frame_divisão.place(x=240, y=90)
@@ -273,18 +277,18 @@ class Tela_principal:
                                      command = self.limpar)
         self.frame_botão_clear.pack(fill="both", expand=True, pady=0)
         
-        self.frame_porcentagem = Button(self.frame_botão_clear, 
-                                     text="C", 
+        self.botao_porcentagem = Button(self.frame_porcentagem, 
+                                     text="%", 
                                      width=8, 
                                      height=3, 
                                      font="Arial 12", 
                                      relief=RAISED,
                                      overrelief="ridge",
                                      bg="antiquewhite2",  
-                                     command = self.limpar)
-        self.frame_botão_clear.pack(fill="both", expand=True, pady=0)
-        
-        self.botão_apaga = Button(self.frame_apaga,
+                                     command = lambda:self.porcentagem())
+        self.botao_porcentagem.pack(fill="both", expand=True, pady=0)
+          
+        self.botao_apaga = Button(self.frame_apaga,
                                      text="⌫",
                                      width=8, 
                                      height=3, 
@@ -293,161 +297,150 @@ class Tela_principal:
                                      overrelief="ridge",
                                      bg="antiquewhite2",  
                                      command = self.apagar)
-        self.botão_apaga.pack(fill="both", expand=True, pady=0) # Garante que o botão preencha o Frame
+        self.botao_apaga.pack(fill="both", expand=True, pady=0)
         
-        self.frame_apaga = Button(self.frame_apaga,
-                                     text="⌫",
+        self.botao_divisão = Button(self.frame_divisão,
+                                     text="÷",
                                      width=8, 
                                      height=3, 
                                      font="Arial 12",
                                      relief=RAISED,
                                      overrelief="ridge",
                                      bg="antiquewhite2",  
-                                     command = self.apagar)
-        self.botão_apaga.pack(fill="both", expand=True, pady=0)
-        
-        self.frame_divisão = Button(self.frame_apaga,
-                                     text="⌫",
-                                     width=8, 
-                                     height=3, 
-                                     font="Arial 12",
-                                     relief=RAISED,
-                                     overrelief="ridge",
-                                     bg="antiquewhite2",  
-                                     command = self.apagar)
-        self.botão_apaga.pack(fill="both", expand=True, pady=0)
+                                     command = lambda:self.inserir_valor("÷"))
+        self.botao_divisão.pack(fill="both", expand=True, pady=0)
    
-        self.frame_num9 = Button(self.frame_apaga,
-                                     text="⌫",
+        self.botao_num9 = Button(self.frame_num9,
+                                     text="9",
                                      width=8, 
                                      height=3, 
                                      font="Arial 12",
                                      relief=RAISED,
                                      overrelief="ridge",
                                      bg="antiquewhite2",  
-                                     command = self.apagar)
-        self.botão_apaga.pack(fill="both", expand=True, pady=0)
+                                     command = lambda:self.inserir_valor("9"))
+        self.botao_num9.pack(fill="both", expand=True, pady=0)
         
-        self.frame_num8 = Button(self.frame_apaga,
-                                     text="⌫",
+        self.botao_num8 = Button(self.frame_num8,
+                                     text="8",
                                      width=8, 
                                      height=3, 
                                      font="Arial 12",
                                      relief=RAISED,
                                      overrelief="ridge",
                                      bg="antiquewhite2",  
-                                     command = self.apagar)
-        self.botão_apaga.pack(fill="both", expand=True, pady=0)
+                                     command = lambda:self.inserir_valor("8"))
+        self.botao_num8.pack(fill="both", expand=True, pady=0)
         
-        self.frame_num7= Button(self.frame_apaga,
-                                     text="⌫",
+        self.botao_num7= Button(self.frame_num7,
+                                     text="7",
                                      width=8, 
                                      height=3, 
                                      font="Arial 12",
                                      relief=RAISED,
                                      overrelief="ridge",
                                      bg="antiquewhite2",  
-                                     command = self.apagar)
-        self.botão_apaga.pack(fill="both", expand=True, pady=0)
+                                     command = lambda:self.inserir_valor("7"))
+        self.botao_num7.pack(fill="both", expand=True, pady=0)
         
-        self.frame_multiplicação = Button(self.frame_apaga,
-                                     text="⌫",
+        self.botao_multiplicação = Button(self.frame_multiplicação,
+                                     text="x",
                                      width=8, 
                                      height=3, 
                                      font="Arial 12",
                                      relief=RAISED,
                                      overrelief="ridge",
                                      bg="antiquewhite2",  
-                                     command = self.apagar)
-        self.botão_apaga.pack(fill="both", expand=True, pady=0)
+                                     command = lambda:self.inserir_valor("x"))
+        self.botao_multiplicação.pack(fill="both", expand=True, pady=0)
         
-        self.frame_num6 = Button(self.frame_apaga,
-                                     text="⌫",
+        self.botao_num6 = Button(self.frame_num6,
+                                     text="6",
                                      width=8, 
                                      height=3, 
                                      font="Arial 12",
                                      relief=RAISED,
                                      overrelief="ridge",
                                      bg="antiquewhite2",  
-                                     command = self.apagar)
-        self.botão_apaga.pack(fill="both", expand=True, pady=0)
+                                     command = lambda:self.inserir_valor("6"))
+        self.botao_num6.pack(fill="both", expand=True, pady=0)
         
-        self.frame_num5 = Button(self.frame_apaga,
-                                     text="⌫",
+        self.botao_num5 = Button(self.frame_num5,
+                                     text="5",
                                      width=8, 
                                      height=3, 
                                      font="Arial 12",
                                      relief=RAISED,
                                      overrelief="ridge",
                                      bg="antiquewhite2",  
-                                     command = self.apagar)
-        self.botão_apaga.pack(fill="both", expand=True, pady=0)
+                                     command = lambda:self.inserir_valor("5"))
+        self.botao_num5.pack(fill="both", expand=True, pady=0)
         
-        self.frame_num4 = Button(self.frame_apaga,
-                                     text="⌫",
+        self.botao_num4 = Button(self.frame_num4,
+                                     text="4",
                                      width=8, 
                                      height=3, 
                                      font="Arial 12",
                                      relief=RAISED,
                                      overrelief="ridge",
                                      bg="antiquewhite2",  
-                                     command = self.apagar)
-        self.botão_apaga.pack(fill="both", expand=True, pady=0)
+                                     command = lambda:self.inserir_valor("4"))
+        self.botao_num4.pack(fill="both", expand=True, pady=0)
         
-        self.frame_subtração = Button(self.frame_apaga,
-                                     text="⌫",
+        self.botao_subtração = Button(self.frame_subtração,
+                                     text="-",
                                      width=8, 
                                      height=3, 
                                      font="Arial 12",
                                      relief=RAISED,
                                      overrelief="ridge",
                                      bg="antiquewhite2",  
-                                     command = self.apagar)
-        self.botão_apaga.pack(fill="both", expand=True, pady=0)
+                                     command = lambda:self.inserir_valor("-"))
+        self.botao_subtração.pack(fill="both", expand=True, pady=0)
         
-        self.frame_num3 = Button(self.frame_apaga,
-                                     text="⌫",
+        self.botao_num3 = Button(self.frame_num3,
+                                     text="3",
                                      width=8, 
                                      height=3, 
                                      font="Arial 12",
                                      relief=RAISED,
                                      overrelief="ridge",
                                      bg="antiquewhite2",  
-                                     command = self.apagar)
-        self.botão_apaga.pack(fill="both", expand=True, pady=0)
+                                     command = lambda:self.inserir_valor("3"))
+        self.botao_num3.pack(fill="both", expand=True, pady=0)
         
-        self.frame_num2 = Button(self.frame_apaga,
-                                     text="⌫",
+        self.botao_num2 = Button(self.frame_num2,
+                                     text="2",
                                      width=8, 
                                      height=3, 
                                      font="Arial 12",
                                      relief=RAISED,
                                      overrelief="ridge",
                                      bg="antiquewhite2",  
-                                     command = self.apagar)
-        self.botão_apaga.pack(fill="both", expand=True, pady=0)
+                                     command = lambda:self.inserir_valor("2"))
+        self.botao_num2.pack(fill="both", expand=True, pady=0)
         
-        self.frame_num1 = Button(self.frame_apaga,
-                                     text="⌫",
+        self.botao_num1 = Button(self.frame_num1,
+                                     text="1",
                                      width=8, 
                                      height=3, 
                                      font="Arial 12",
                                      relief=RAISED,
                                      overrelief="ridge",
                                      bg="antiquewhite2",  
-                                     command = self.apagar)
-        self.botão_apaga.pack(fill="both", expand=True, pady=0)
+                                     command = lambda:self.inserir_valor("1"))
+        self.botao_num1.pack(fill="both", expand=True, pady=0)
         
-        self.frame_soma = Button(self.frame_apaga,
-                                     text="⌫",
+        self.botao_soma = Button(self.frame_soma,
+                                     text="+",
                                      width=8, 
                                      height=3, 
                                      font="Arial 12",
                                      relief=RAISED,
                                      overrelief="ridge",
                                      bg="antiquewhite2",  
-                                     command = self.apagar)
-        self.botão_apaga.pack(fill="both", expand=True, pady=0)
+                                     command = lambda:self.inserir_valor("+"))
+        self.botao_soma.pack(fill="both", expand=True, pady=0)
               
         self.botão_num0 = Button(self.frame_num0,
                                      text="0",
@@ -457,29 +450,30 @@ class Tela_principal:
                                      relief=RAISED,
                                      overrelief="ridge",
                                      bg="antiquewhite2",  
-                                     command = self.inserir_valor("0"))
+                                     command = lambda:self.inserir_valor("0"))
         self.botão_num0.pack(fill="both", expand=True, pady=0)
         
-        self.frame_virgula = Button(self.frame_virgula,
-                                     text=",",
+        self.botao_virgula = Button(self.frame_virgula,
+                                     text=".",
                                      width=8, 
                                      height=3, 
                                      font="Arial 12",
                                      relief=RAISED,
                                      overrelief="ridge",
                                      bg="antiquewhite2",  
-                                     command = self.inserir_valor("."))
-        self.botão_apaga.pack(fill="both", expand=True, pady=0)
+                                     command = lambda:self.inserir_valor("."))
+        self.botao_virgula.pack(fill="both", expand=True, pady=0)
         
-        self.frame_resultado = Button(self.frame_apaga,
-                                     text="⌫",
+        self.botao_resultado = Button(self.frame_resultado,
+                                     text="=",
                                      width=8, 
                                      height=3, 
                                      font="Arial 12",
                                      relief=RAISED,
                                      overrelief="ridge",
-                                     bg="antiquewhite2")
-        self.botão_apaga.pack(fill="both", expand=True, pady=0)
+                                     bg="antiquewhite2",
+                                     command = self.Calcular_o_resultado)
+        self.botao_resultado.pack(fill="both", expand=True, pady=0)
 
 
     
