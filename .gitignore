@@ -1,1 +1,5 @@
-.__pycache__
+# Ignorar arquivos compilados pelo Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd

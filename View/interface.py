@@ -6,7 +6,8 @@ from tkinter import *
 class Tela_principal:
 
     # Criação da janela principal e chamado as operações
-    def __init__(self): 
+    def __init__(self, controller): 
+        self.controller = controller
         self.janela = tk.Tk()
         self.valor_atual = ""
         
@@ -14,7 +15,7 @@ class Tela_principal:
         self.config_tela()
         self.conteiner_display_e_tela()
         self.centralizar_app()  
-        self.atualizar_display()
+        self.atualizar_display(self.valor_atual)
         self.frames_botoes()
         self.criar_botoes()
         self.janela.mainloop()
@@ -74,52 +75,19 @@ class Tela_principal:
         self.frame_tela.place(x=0, y=90)
     
     # Criando a função para atualizar o Display
-    def atualizar_display(self):
-        self.label_display.config(text=self.valor_atual)
+    def atualizar_display(self, valor):
+        self.label_display.config(text=valor)
      
-    # Função para inserir valores e operadores       
-    def inserir_valor(self, valor):
-        self.valor_atual += str(valor)
-        self.atualizar_display()
-    
-    def Calcular_o_resultado(self):
-        try:
-         valor_atual = ""
-         resultado = str(eval(self.valor_atual.replace('x', '*').replace('÷', '/')))
-         self.valor_atual.set(resultado)
-        except:
-          self.valor_atual = "Erro"
-          self.atualizar_display()  # <- tem que atualizar após calcular  
-        
-    # Criando as funções para apagar e limpar
-    def limpar(self):  
-        self.valor_atual = ""
-        self.atualizar_display()
-
-    def apagar(self):
-        self.valor_atual = self.valor_atual[:-1]
-        self.atualizar_display()    
-    
-    # Criando a função porcentagem
-    def porcentagem(self):
-        try:
-            expressao = self.valor_atual.replace('x', '*').replace('÷', '/')
-            resultado = eval(expressao) / 100
-            self.valor_atual = str(resultado)
-        except:
-            self.valor_atual = "Erro"
-            self.atualizar_display()
-  
         # Criação dos containers dos botões
     def frames_botoes(self):  
-        self.frame_botão_clear = Frame(self.janela,
+        self.frame_botao_clear = Frame(self.janela,
                                         relief="groove", 
                                        width=90,
                                        height=70, 
                                        borderwidth=0.6,
                                        bg="cornsilk1"
                                        )
-        self.frame_botão_clear.place(x=0, y=90)
+        self.frame_botao_clear.place(x=0, y=90)
 
         self.frame_porcentagem = Frame(self.janela, 
                                   relief="groove",
@@ -266,7 +234,7 @@ class Tela_principal:
         self.frame_resultado.place(x=240, y=362)
 
     def criar_botoes(self):
-        self.frame_botão_clear = Button(self.frame_botão_clear, 
+        self.botao_clear = Button(self.frame_botao_clear, 
                                      text="C", 
                                      width=8, 
                                      height=3, 
@@ -274,8 +242,8 @@ class Tela_principal:
                                      relief=RAISED,
                                      overrelief="ridge",
                                      bg="antiquewhite2",  
-                                     command = self.limpar)
-        self.frame_botão_clear.pack(fill="both", expand=True, pady=0)
+                                     command = self.controller.limpar)
+        self.botao_clear.pack(fill="both", expand=True, pady=0)
         
         self.botao_porcentagem = Button(self.frame_porcentagem, 
                                      text="%", 
@@ -285,7 +253,7 @@ class Tela_principal:
                                      relief=RAISED,
                                      overrelief="ridge",
                                      bg="antiquewhite2",  
-                                     command = lambda:self.porcentagem())
+                                     command = lambda:self.controller.controller.porcentagem)
         self.botao_porcentagem.pack(fill="both", expand=True, pady=0)
           
         self.botao_apaga = Button(self.frame_apaga,
@@ -296,7 +264,7 @@ class Tela_principal:
                                      relief=RAISED,
                                      overrelief="ridge",
                                      bg="antiquewhite2",  
-                                     command = self.apagar)
+                                     command = self.controller.apagar)
         self.botao_apaga.pack(fill="both", expand=True, pady=0)
         
         self.botao_divisão = Button(self.frame_divisão,
@@ -442,7 +410,7 @@ class Tela_principal:
                                      command = lambda:self.inserir_valor("+"))
         self.botao_soma.pack(fill="both", expand=True, pady=0)
               
-        self.botão_num0 = Button(self.frame_num0,
+        self.botao_num0 = Button(self.frame_num0,
                                      text="0",
                                      width=18, 
                                      height=3, 
@@ -451,7 +419,7 @@ class Tela_principal:
                                      overrelief="ridge",
                                      bg="antiquewhite2",  
                                      command = lambda:self.inserir_valor("0"))
-        self.botão_num0.pack(fill="both", expand=True, pady=0)
+        self.botao_num0.pack(fill="both", expand=True, pady=0)
         
         self.botao_virgula = Button(self.frame_virgula,
                                      text=".",
@@ -472,11 +440,9 @@ class Tela_principal:
                                      relief=RAISED,
                                      overrelief="ridge",
                                      bg="antiquewhite2",
-                                     command = self.Calcular_o_resultado)
+                                     command = self.controller.calcular_o_resultado)
         self.botao_resultado.pack(fill="both", expand=True, pady=0)
 
-
-    
 if __name__ == "__main__":
     #Mantem a janela aberta
     Tela_principal()
