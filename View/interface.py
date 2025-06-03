@@ -249,7 +249,7 @@ class Tela_principal:
                                      relief=RAISED,
                                      overrelief="ridge",
                                      bg="antiquewhite2",  
-                                     command = lambda:self.controller.porcentagem)
+                                     command = lambda:self.controller.porcentagem())
         self.botao_porcentagem.pack(fill="both", expand=True, pady=0)
           
         self.botao_apaga = Button(self.frame_apaga,

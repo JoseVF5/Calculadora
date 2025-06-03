@@ -22,8 +22,8 @@ class CalucaldoraApp:
        
     def inserir_valor(self, valor):
        self.valor_atual += str(valor)
-       self.View.atualizar_display(self.valor_atual)
-    
+       self.View.atualizar_display(self.valor_atual)       
+            
     def calcular_o_resultado(self):
         try:
          resultado = str(eval(self.valor_atual.replace('x', '*').replace('÷', '/')))
@@ -36,18 +36,18 @@ class CalucaldoraApp:
         
     # Criando as funções para apagar e limpar
     def limpar(self):  
-        self.valor_atual = "0"
+        self.valor_atual = ""
         self.View.atualizar_display(self.valor_atual)
-
+        
     def apagar(self):
         self.valor_atual = self.valor_atual[:-1]
         self.View.atualizar_display(self.valor_atual)   
 
     def porcentagem(self):
         try:
-            expressao = self.valor_atual.replace('x', '*').replace('÷', '/')
-            resultado = eval(expressao) / 100
-            self.valor_atual = str(resultado)
+            resultado = str(float(self.valor_atual) / 100 )
+            self.valor_atual = resultado
+            self.View.atualizar_display(self.valor_atual)
         except:
             self.valor_atual = "Erro"
-            self.atualizar_display()
+            self.View.atualizar_display(self.valor_atual)
