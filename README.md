@@ -6,5 +6,5 @@ Aproveitei a oportunidade para aplicar um pouco do meu conhecimento na arquitetu
 o fluxo de interação entre os arquivos do projeto.
 </p>
 <p>
-Ultrapassou minhas expectativas a criação dessa calculadora em pyhton. Espero que mais projetos como esse me desafiem a buscar sempore mais conhecimento na área e superem minhas expectativas de difculdade.
+Ultrapassou minhas expectativas a criação dessa calculadora em pyhton. Espero que mais projetos como esse me desafiem a buscar sempre mais conhecimento na área e superem minhas expectativas de difculdade.
 </p>
